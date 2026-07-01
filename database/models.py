@@ -1,6 +1,5 @@
 from sqlalchemy import Column, Integer, String, Text, Float, DateTime, ForeignKey
 from sqlalchemy.sql import func
-
 from database.connection import Base
 
 
@@ -36,3 +35,4 @@ class MarketPrediction(Base):
     prediction = Column(String(20), nullable=False)
     impact_score = Column(Float, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+

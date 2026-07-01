@@ -1,0 +1,32 @@
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: financial-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: financial_sentiment_db
+    ports:
+      - "5432:5432"
+
+  kafka:
+    image: apache/kafka:latest
+    container_name: financial-kafka
+    restart: always
+    ports:
+      - "9092:9092"
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: financial-api
+    depends_on:
+      - postgres
+      - kafka
+    ports:
+      - "8000:8000"
+    env_file:
+      - ../.env
