@@ -4,8 +4,6 @@ from database import get_news, get_sentiment, get_prediction
 from charts import sentiment_pie, company_chart, trend_chart
 from streamlit_autorefresh import st_autorefresh
 
-# -------------------- PAGE CONFIG -------------------- #
-
 st.set_page_config(
     page_title="AI Financial News Dashboard",
     page_icon="📈",
@@ -18,7 +16,7 @@ st_autorefresh(interval=30000, key="dashboard_refresh")
 st.title("📈 AI Financial News & Sentiment Dashboard")
 st.markdown("---")
 
-# -------------------- LOAD DATA -------------------- #
+
 
 news = get_news()
 sentiment = get_sentiment()
@@ -28,7 +26,7 @@ try:
 except:
     prediction = pd.DataFrame()
 
-# -------------------- SIDEBAR -------------------- #
+
 
 st.sidebar.header("Filters")
 
@@ -47,7 +45,6 @@ if not news.empty and "company" in news.columns:
             news["company"] == selected_company
         ]
 
-# -------------------- SEARCH -------------------- #
 
 search = st.text_input(
     "🔍 Search News",
@@ -61,7 +58,7 @@ if search and "title" in news.columns:
         .str.contains(search, case=False)
     ]
 
-# -------------------- METRICS -------------------- #
+
 
 total_news = len(news)
 
@@ -91,14 +88,13 @@ if not sentiment.empty:
 
 c1, c2, c3, c4 = st.columns(4)
 
-c1.metric("📰 Total News", total_news)
-c2.metric("😊 Positive", positive)
-c3.metric("😐 Neutral", neutral)
-c4.metric("☹️ Negative", negative)
+c1.metric(" Total News", total_news)
+c2.metric(" Positive", positive)
+c3.metric(" Neutral", neutral)
+c4.metric("Negative", negative)
 
 st.markdown("---")
 
-# -------------------- CHARTS -------------------- #
 
 st.subheader("📊 Analytics")
 
@@ -128,7 +124,6 @@ st.plotly_chart(
 
 st.markdown("---")
 
-# -------------------- NEWS -------------------- #
 
 st.subheader("📰 Latest News")
 
@@ -157,7 +152,6 @@ else:
 
 st.markdown("---")
 
-# -------------------- SENTIMENT -------------------- #
 
 st.subheader("😊 Sentiment Results")
 
@@ -185,7 +179,6 @@ else:
 
 st.markdown("---")
 
-# -------------------- PREDICTIONS -------------------- #
 
 st.subheader("📈 Market Predictions")
 
@@ -213,7 +206,6 @@ else:
 
 st.markdown("---")
 
-# -------------------- DOWNLOAD -------------------- #
 
 if not news.empty:
 
